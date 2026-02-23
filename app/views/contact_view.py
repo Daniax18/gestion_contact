@@ -2,7 +2,7 @@
 from models import contact
 from services.contact_service import ContactService
 
-class ContactController:
+class ContactView:
     def __init__(self, contactService : ContactService):
         self.contactService = contactService
 
