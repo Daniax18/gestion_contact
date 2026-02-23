@@ -11,15 +11,10 @@ class ContactView:
         email = input("Enter contact email: ")
         phoneNumber = input("Enter contact phone number: ")
         self.contactService.add_contact(name, email, phoneNumber)
-        print("Contact added successfully!")
 
     def getAllContacts(self):
         contacts = self.contactService.get_all_contacts()
-
-        if not contacts:
-            print("No contacts found.")
-            return
-
+       
         for contact in contacts:
             print(f"Name: {contact.name}")
             print(f"Email: {contact.email}")
@@ -31,13 +26,21 @@ class ContactView:
             print("\nContact Management System")
             print("1. Add Contact")
             print("2. View All Contacts")
-            print("3. Exit")
+            print("3. Delete Contact")
+            print("4. Count Contacts")
+            print("5. Exit")
             choice = input("Enter your choice: ")
             if choice == '1':
                 self.createContact()
             elif choice == '2':
                 self.getAllContacts()
             elif choice == '3':
+                phoneNumber = input("Enter phone number of contact to delete: ")
+                self.contactService.delete_contact(phoneNumber)
+            elif choice == '4':
+                count = self.contactService.count_contacts()
+                print(f"Response => Total contacts: {count}")
+            elif choice == '5':
                 print("Exiting...")
                 break
             else:
