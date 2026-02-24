@@ -36,3 +36,21 @@ class ContactService:
     def count_contacts(self):
         return len(self.contacts)
     
+    def can_be_modified(self, index):
+        return 0 <= index < len(self.contacts)
+    
+    def modify_contact(self, index, phoneNumber, name, email):
+        if self.can_be_modified(index) is False:
+            print("Response => Contact not found.")
+            return
+        contact = self.contacts[index]
+        if contact:
+            contact.name = name
+            contact.email = email
+            contact.phoneNumber = phoneNumber
+            print("Response => Contact modified successfully.")
+        else:
+            print("Response => Contact not found.")
+    
+
+    

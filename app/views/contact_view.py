@@ -6,6 +6,20 @@ class ContactView:
     def __init__(self, contactService : ContactService):
         self.contactService = contactService
 
+    def modifyContact(self):
+        self.getAllContacts()
+        if not self.contactService.count_contacts():
+            return
+        index = int(input("Enter the index of the contact to modify: ")) - 1
+        if self.contactService.can_be_modified(index):
+            print("Contact found. Enter new details:")
+            name = input("Enter new name: ")
+            email = input("Enter new email: ")
+            phoneNumber = input("Enter new phone number: ")
+            self.contactService.modify_contact(index, phoneNumber, name, email)
+        else:
+            print("Response => Contact not found.")
+
     def createContact(self):
         name = input("Enter contact name: ")
         email = input("Enter contact email: ")
@@ -15,10 +29,9 @@ class ContactView:
     def getAllContacts(self):
         contacts = self.contactService.get_all_contacts()
        
-        for contact in contacts:
-            print(f"Name: {contact.name}")
-            print(f"Email: {contact.email}")
-            print(f"Phone: {contact.phoneNumber}")
+        for i in range (len(contacts)):
+            contact = contacts[i]
+            print(f"{i + 1} : Name: {contact.name} | Email: {contact.email} | Phone: {contact.phoneNumber}")
             print("-" * 20)
 
     def showMenu(self):
@@ -28,7 +41,8 @@ class ContactView:
             print("2. View All Contacts")
             print("3. Delete Contact")
             print("4. Count Contacts")
-            print("5. Exit")
+            print("5. Modify Contact")
+            print("6. Exit")
             choice = input("Enter your choice: ")
             if choice == '1':
                 self.createContact()
@@ -41,6 +55,8 @@ class ContactView:
                 count = self.contactService.count_contacts()
                 print(f"Response => Total contacts: {count}")
             elif choice == '5':
+                self.modifyContact()
+            elif choice == '6':
                 print("Exiting...")
                 break
             else:
